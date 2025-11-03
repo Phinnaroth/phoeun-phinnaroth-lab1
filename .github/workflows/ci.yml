@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [16.x, 18.x]
 
     steps:
       - name: Checkout code
@@ -24,10 +24,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Verify ESLint installation
+        run: npx eslint -v
 
       - name: Lint code
-        run: npm run lint
+        run: npx eslint . --ext .js
 
       - name: Run tests
         run: npm test
